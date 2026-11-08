@@ -4,7 +4,7 @@ import random
 import matplotlib.pyplot as plt
 from matplotlib.ticker import FuncFormatter
 
-from hash_table import HashTable
+from HashTable import HashTable
 from Products import Product
 
 
@@ -31,13 +31,13 @@ class InventorySystem:
     def search_product(self, product_id):
         return self.table.search(product_id)
 
-    def edit_product(self, product_id, **fields):
+    def edit_product(self, product_id, **kwargs):
         product = self.search_product(product_id)
 
         if product is None:
             return False
 
-        for key, value in fields.items():
+        for key, value in kwargs.items():
             if value is not None and hasattr(product, key):
                 setattr(product, key, value)
 
@@ -95,7 +95,7 @@ def menu():
 
 def new_product():
 
-    product_id = input("Product ID: ").strip()
+    product_id = input("Product ID: ").strip().capitalize()
     name = input("Name: ").strip()
     category = input("Category: ").strip()
     price = float(input("Price (RM): "))
@@ -308,13 +308,14 @@ def main():
 
 
             case 2:
-                product_id = input("Enter Product ID: ").strip()
+                product_id = input("Enter Product ID: ").strip().upper()
                 result = system.search_product(product_id)
 
                 print(f"Found: {result}" if result else "Product not found.")
 
             case 3:
-                product_id = input("Enter Product ID: ").strip()
+                product_id = input("Enter Product ID: ").strip().upper()
+                print(product_id)
 
                 if system.search_product(product_id) is None:
                     print("Product not found.")

@@ -2,12 +2,12 @@
 #Product Class
 class Product:
 
-    def __init__(self, product_id:str, name:str, category:str, price:float, quantity:int, expiry_date:str, manufacturer:str):
-        self.product_id = product_id
+    def __init__(self, product_id, name, category, price, quantity, expiry_date, manufacturer):
+        self.product_id = product_id.upper()
         self.name = name
         self.category = category
-        self.price = price
-        self.quantity = quantity
+        self.price = float(price)
+        self.quantity = int(quantity)
         self.expiry_date = expiry_date
         self.manufacturer= manufacturer
 
