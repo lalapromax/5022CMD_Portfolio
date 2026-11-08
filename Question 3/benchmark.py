@@ -28,7 +28,8 @@ def run_multithreaded_round(numbers):
     for thread in threads:
         thread.join()
 
-    return time.perf_counter_ns() - t1, results
+    t2 = time.perf_counter_ns()
+    return t2 - t1, results
 
 
 def run_non_threaded_round(numbers):
@@ -39,10 +40,10 @@ def run_non_threaded_round(numbers):
 
 
 # Reusable benchmarking function
-def benchmark(title, run_function, numbers):
+def benchmark(title, run_function):
 
     print(f"=== {title} ===")
-    print(f"Values: Fibonacci{numbers} | Rounds: {ROUNDS}")
+    print(f"Values: Fibonacci{NUMBERS} | Rounds: {ROUNDS}")
     print("=" * 78)
     print(f"{'Round':<8}{'T (nanoseconds)':<22}{'T (seconds)':<15}{'Results'}")
     print("-" * 78)
@@ -50,7 +51,7 @@ def benchmark(title, run_function, numbers):
     times = []
 
     for round_num in range(1, ROUNDS + 1):
-        elapsed_ns, results = run_function(numbers)
+        elapsed_ns, results = run_function(NUMBERS)
         times.append(elapsed_ns)
 
         print(f"{round_num:<8}{elapsed_ns:<22,}{elapsed_ns / 1e9:<15.6f}{results}")
@@ -71,18 +72,14 @@ def main():
     # 1. Multithreaded benchmark
     mt_avg_ns = benchmark(
         "Fibonacci Computation With Multithreading",
-        run_multithreaded_round,
-        NUMBERS
-    )
+        run_multithreaded_round)
 
     print()
 
     # 2. Sequential benchmark
     st_avg_ns = benchmark(
         "Fibonacci Computation Without Multithreading",
-        run_non_threaded_round,
-        NUMBERS
-    )
+        run_non_threaded_round)
 
     # 3. Observation
     diff_percent = ((st_avg_ns - mt_avg_ns) / st_avg_ns) * 100
