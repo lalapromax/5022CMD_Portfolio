@@ -69,8 +69,8 @@ class Course:
             return self.course_code == other.course_code
         return False
 
-    # def __str__(self):
-    #     return f"{ self.course_code:<5} - {self.course_name}"
+    def __str__(self):
+        return f"{ self.course_code:<5} - {self.course_name}"
 
     def display_details(self):
 
